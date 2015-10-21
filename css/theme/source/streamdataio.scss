@@ -122,38 +122,3 @@ h1, h2, h3, h4, h5, h6 {
 	color: red;
 	font-weight: bold !important;
 }
-
-.book-cover {
-	border-top-style: ridge !important;
-	border-top-color: white !important;
-	border-top-width: 5px !important;
-
-	border-left-style: ridge !important;
-	border-left-color: black !important;
-	border-left-width: 5px !important;
-
-	border-bottom-style: ridge !important;
-	border-bottom-color: black !important;
-	border-bottom-width: 5px !important;
-
-	border-right-style: solid !important;
-	border-right-color: white !important;
-	border-right-width: 5px !important;
-
-	padding: 15px;
-
-	.book-title {
-		border-radius: 25px;
-		background: white;
-		color: black;
-		margin: 35px 25px 25px 25px;
-	}
-}
-
-.danny {
-	background-color: #d6501e;
-}
-
-.brett {
-		background-color: #15388f;
-}
