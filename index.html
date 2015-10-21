@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>UI Reactivity and Interactivity</title>
+
+		<meta name="description" content="UI Reactivity and Interactivity: what for? How?">
+		<meta name="author" content="Cédric Tran-Xuan">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/streamdataio.css" id="theme">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+		<!-- <link rel="stylesheet" href="css/flexboxgrid.css"> -->
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+		<div class="reveal">
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section class="cover" data-state="cover">
+					<p>
+						<img width="153" height="86" alt="Streamdata.io logo" src="img/streamdataio-with-text-vl.png" />
+						<img height="66" alt="SoftShake logo" src="img/logo-softshake.png" style="margin-left: 20px"/>
+					</p>
+					<p style="margin-top: 90px; margin-bottom: 30px;">
+						<h3>Réactivité et Interactivité des UI :</h3>
+					</p>
+					<p>
+						<h4 style="margin-bottom: 70px;">que faire et comment ?</h4>
+					</p>
+					<div class="avatar-twitter-container">
+						<div class="avatar-item"><img alt="ctranxuan-avatar" src="img/ctx-avatar.png" /></div>
+						<a target="_blank" href="https://twitter.com/ctranxuan" class="avatar-item">@ctranxuan</a>
+					</div>
+					<div>
+						<a target="_blank" href="https://twitter.com/StreamdataIO" class="avatar-item">@StreamdataIO</a>
+					</div>
+				</section>
+				<section data-background="img/pins.jpg">
+				</section>
+				<section data-background="img/baby.jpg">
+				</section>
+				<section data-background="img/brain-sensory-memory.png">
+				</section>
+				<section>
+					<img alt="Reaction time scale" src="img/reaction-time.png" />
+					<img alt="High reaction time of application can lead to frustration" src="img/computer-grief.gif"
+					style="position: fixed; bottom: 80px; right: 80px; z-index=500; margin-bottom: 50px; margin-right: 50px"
+					class="fragment" />
+				</section>
+				<section>
+					<h2>Real-time UX... i$ Rea£-time Mon€¥</h2>
+					<p>
+						Amazon found every 100 milliseconds of apps latency cost them 1% in sales.
+						<div style="font-size: small;">
+						  <a href="http://perspectives.mvdirona.com/2009/10/31/TheCostOfLatency.aspx">Source: http://perspectives.mvdirona.com/2009/10/31/TheCostOfLatency.aspx</a>
+						</div>
+					</p>
+					<p>
+						Google found an extra 0.5 seconds in search page generation time dropped traffic by 20%
+						<div style="font-size: small;">
+							<a href="http://highscalability.com/latency-everywhere-and-it-costs-you-sales-how-crush-it">Source: http://highscalability.com/latency-everywhere-and-it-costs-you-sales-how-crush-it</a>
+						</div>
+					</p>
+				</section>
+				<section>
+					<img alt="-100 ms is equivalent to -1% of revenue or -5% of page views" src="img/100ms.png" />
+				</section>
+				<section data-background="img/mobile-world.jpg">
+				</section>
+				<section>
+					<h2>Round Trip Delays (ping time)</h2>
+					<img alt="Round trip delays matters from fiber (less than 10ms to 3G around 150ms)"
+							 src="img/round-trip-delay.png" />
+				 <p style="font-size: smaller;">
+					 In ADSL, first useful piece of data in 60ms (HTTPS)
+In 4G / LTE, first useful piece of data in 300 ms (450 ms in 3G)
+				 </p>
+				</section>
+				<section>
+					<img alt="spinning wheel is for bad applications" src="img/spinning-wheel.gif" width="50%" />
+				</section>
+				<section>
+					<img alt="to boost your application, latency needs to be taken in account from the inception of the application"
+						src="img/latency-requirements.png" />
+				</section>
+				<section>
+					<h1>Netflix / Google / Twitter</h1>
+				</section>
+				<section data-background="img/netflix-films-cover.jpg">
+				</section>
+				<section>
+					<img alt="Netflix JSONG is a response to optimize UX by caching on the client side the data and updating only the data that has changed"
+					src="img/netflix-jsong.png" />
+				</section>
+				<section>
+					<img alt="Google search with its suggested search while typing is another example of realtime UX"
+					src="img/google-search.png" />
+				</section>
+				<section>
+					<img alt="Twitter has opened its Twitter Streaming API to give real-time UX too"
+					src="img/twitter-streaming-api.png" />
+				</section>
+				<section>
+					<img alt="fortunately, we can use our reptilian brain to focus user attention on animated data and improve his/her UX"
+						src="img/moving-man.gif" width="40%"/>
+				</section>
+				<section data-background="img/trading.jpg">
+				</section>
+				<section>
+					<h2>Dynamic data for your UI</h2>
+					<div class="row">
+						<div class="col-md-6">
+							<ul>
+								<li>Stock prices &amp; betting odds</li>
+								<li>Social networks info / status</li>
+								<li>Search options / words</li>
+								<li>News</li>
+								<li>Stock of services /products</li>
+							</ul>
+						</div>
+						<div class="col-md-6">
+							<ul>
+								<li>Prices</li>
+								<li>Dashboards</li>
+								<li>Collaborative works/inputs</li>
+								<li>Online games</li>
+								<li>IoT</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+				<section data-background="img/vegetables.jpg">
+					<h1>Which ingredients for a real-time UX?</h1>
+				</section>
+				<section>
+					<h2>Solutions for dynamic data</h2>
+					<ul>
+						<li>Long polling</li>
+						<li>WebSockets</li>
+						<li>Server-Sent Events</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Long Polling</h3>
+					<img alt="Long polling is not the solution: it was a workaround to simulate push. Don't use it anymore."
+					     src="img/lily-angry.gif" />
+					<p>Don't use it anymore</p>
+				</section>
+				<section>
+					<div class="row">
+						<div class="col-md-6">
+							<h2>WebSockets</h2>
+							<ul>
+								<li>Push techno</li>
+								<li>W3C</li>
+								<li>2008</li>
+							</ul>
+						</div>
+						<div class="col-md-6">
+							<h2>Server-Sent Events</h2>
+							<ul>
+								<li>Push techno</li>
+								<li>W3C</li>
+								<li>2006</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+				<section>
+					<div class="row">
+						<div class="col-md-6">
+							<h2>WebSockets</h2>
+							<p><img alt="bi-directional / full-duplex protocol" src="img/bidirectional.gif"></p>
+						</div>
+						<div class="col-md-6">
+							<h2>Server-Sent Events</h2>
+							<p><img alt="Server push to client protocol" src="img/unidirectional.gif" class="fragment"></p>
+						</div>
+					</div>
+				</section>
+				<section>
+					<div class="row">
+						<div class="col-md-6">
+							<h2>WebSockets</h2>
+							<ul>
+								<li>TCP</li>
+								<li>low-level protocol</li>
+								<li>HTTP upgrade handshake</li>
+							</ul>
+							<pre>
+								<code data-trim>
+GET /chat HTTP/1.1
+Host: example.com:8000
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==
+Sec-WebSocket-Version: 13
+								</code>
+							</pre>
+						</div>
+						<div class="col-md-6">
+							<h2>Server-Sent Events</h2>
+							<img alt="HTTP/1.1, what else?" src="img/http-what-else.jpg" class="fragment"/>
+							<pre class="fragment">
+								<code data-trim class="hljs http">
+GET /stream HTTP/1.1 1
+Host: example.com
+Accept: text/event-stream
+								</code>
+							</pre>
+						</div>
+					</div>
+				</section>
+				<section>
+					<div class="row">
+						<div class="col-md-6">
+							<h2>WebSockets</h2>
+							<p>proxies and load balancers
+							reconfiguration</p>
+							<p><img alt="proxies reconfiguration" src="img/reconfig-proxy2.jpg" width="70%" class="fragment"/></p>
+							<p><img alt="be kind with the ops for the reconfiguration" src="img/cat-reconfig.jpg" width="30%" class="fragment"/></p>
+						</div>
+						<div class="col-md-6">
+							<h2>Server-Sent Events</h2>
+							<br/>
+							<p class="fragment">No need to reconfigure! <br>(it's HTTP)</p>
+						</div>
+					</div>
+				</section>
+				<section>
+					<div class="row">
+						<div class="col-md-6">
+							<h2>WebSockets</h2>
+							<img alt="no reconnection mechanism" src="img/deconnection2.jpg"/>
+						</div>
+						<div class="col-md-6">
+							<h2>Server-Sent Events</h2>
+							<p>
+								<img alt="reconnection mechanism + retry" src="img/reconnection.jpg"/>
+							</p>
+						</div>
+					</div>
+				</section>
+				<section>
+					<section>
+						<div class="row">
+							<div class="col-md-6">
+								<h2>WebSockets</h2>
+								<p>binary + text</p>
+								<p class="fragment" data-fragment-index="1">native support browsers</p>
+							</div>
+							<div class="col-md-6">
+								<h2>Server-Sent Events</h2>
+								<p>text</p>
+								<table class="fragment" data-fragment-index="2">
+									<thead>
+										<tr>
+											<th>API</th>
+											<th><img alt="Chrome" src="img/chrome-icon.png"/></th>
+											<th><img alt="Firefox" src="img/firefox-icon.png"/></th>
+											<th><img alt="IE" src="img/edge-icon.png"/></th>
+											<th><img alt="Safari" src="img/safari-icon.png"/></th>
+											<th><img alt="Opera" src="img/opera-icon.png"/></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td class="no-bottom-line">SSE</td>
+											<td class="no-bottom-line">6.0</td>
+											<td class="no-bottom-line">6.0</td>
+											<td class="no-bottom-line"><span class="failure">not</span><br/><span class="failure">supported</span></td>
+											<td class="no-bottom-line">5.0</td>
+											<td class="no-bottom-line">11.5</td>
+										</tr>
+										<tr class="fragment" data-fragment-index="3">
+											<td class="no-bottom-line"></td>
+											<td class="no-bottom-line"></td>
+											<td class="no-bottom-line"></td>
+											<td class="no-bottom-line">
+												<img alt="not supported" src="img/red-arrow.png"/>
+											</td>
+											<td class="no-bottom-line"></td>
+										</tr>
+										<tr class="fragment" data-fragment-index="3" valign="middle">
+											<td class="no-bottom-line" colspan="5">
+												<img alt="not supported" src="img/shocked.gif" width="70%"/>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<p class="fragment" data-fragment-index="4">… but polyfills</p>
+							</div>
+						</div>
+					</section>
+					<section>
+						<p>
+							<div>
+								<a target="_blank" href="https://goo.gl/cCMIGf">https://goo.gl/cCMIGf</a>
+								<img alt="Edge needs you: vote for SSE support!" src="img/edge-needs-you3.jpg" width="30%"/>
+								<a target="_blank" href="https://goo.gl/HjJDIv">https://goo.gl/HjJDIv</a>
+							</div>
+							<div>
+								<a target="_blank" href="https://goo.gl/cCMIGf"><img alt="Vote for SSE support in Edge" src="img/edge-vote-qrcode.png" width="20%"/></a>
+								<a target="_blank" href="https://goo.gl/HjJDIv"><img alt="Vote here too for SSE support in Edge" src="img/edge-vote-qrcode2.png" width="20%"/></a>
+								<img alt="Tweet to vote for SSE support in Edge" src="img/edge-vote-twitter-qrcode.png" width="20%"/>
+							</div>
+						</p>
+					</section>
+					<section>
+						<div class="row">
+							<div class="col-md-6">
+								<h2>WebSockets</h2>
+	<pre><code>var websocket =
+  new WebSocket('ws://mywebsocketserver/echo');
+websocket.onopen = function () {
+	...
+};
+
+websocket.onmessage = function (e) {
+	...
+};
+
+websocket.onerror = function (error) {
+	...
+};
+</code></pre>
+						</div>
+						<div class="col-md-6">
+							<h2>Server-Sent Events</h2>
+<pre class="fragment"><code>var eventSource =
+  new EventSource('http://mysseserver/echo');
+eventSource.onopen = function () {
+	...
+};
+
+eventSource.onmessage = function (e) {
+	...
+};
+
+eventSource.onerror = function (error) {
+	...
+};
+eventSource.addEventListener('foo', function(e) {
+  ...
+}, false);
+	</code></pre>
+							</div>
+						</div>
+					</section>
+				</section>
+				<section>
+					<h1>"Perfs"</h1>
+					<p>Use case: Préchargement de 500 Tweets sur une page web (nginx configuré en tant que proxy)</p>
+					<table>
+						<thead>
+							<tr>
+								<th>&nbsp;</th>
+								<th><img alt="Safari" src="img/safari-icon.png"/></th>
+								<th><img alt="Chrome" src="img/chrome-icon.png"/></th>
+								<th><img alt="Firefox" src="img/firefox-icon.png"/></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>WebSockets</td>
+								<td>16s</td>
+								<td>8s</td>
+								<td>8s</td>
+							</tr>
+							<tr>
+								<td>SSE</td>
+								<td><span class="success">7s</span></td>
+								<td><span class="success">5s</span></td>
+								<td><span class="success">6s</span></td>
+							</tr>
+							<tr>
+								<td>diff</td>
+								<td>x2.2</td>
+								<td>x1.6</td>
+								<td>x13</td>
+							</tr>
+						</tbody>
+					</table>
+					<p>Source http://matthiasnehlsen.com/blog/2013/05/01/server-sent-events-vs-websockets/</p>
+				</section>
+				<!-- <section>
+					<h1>Use cases</h1>
+					<div class="row">
+						<div class="col-md-6">
+							<h2>WebSockets</h2>
+							<p>
+								<ul>
+									<li>Chat, chat, chat (*)</li>
+									<li class="fragment" data-fragment-index="2">Share living editing</li>
+									<li class="fragment" data-fragment-index="3">GPS GoogleMap-like</li>
+									<li class="fragment" data-fragment-index="4">Games</li>
+								</ul>
+								<img alt="Chat application" src="img/cat-computer.gif" height="200px" width="200px" class="fragment" data-fragment-index="1"/>
+							</p>
+							<p class="fragment" data-fragment-index="5" style="font-size: small;">(*) WebRTC might be even more suitable</p>
+						</div>
+						<div class="col-md-6">
+							<h2>Server-Sent Events</h2>
+							<ul>
+								<li class="fragment" data-fragment-index="6">Fintech / Trading</li>
+								<li class="fragment" data-fragment-index="7">Betting</li>
+								<li class="fragment" data-fragment-index="8">Games</li>
+								<li class="fragment" data-fragment-index="9">Realtime timetables</li>
+								<li class="fragment" data-fragment-index="10">Animated data apps (charts, monitoring, etc.)</li>
+								<li class="fragment" data-fragment-index="11">etc.</li>
+							</ul>
+						</div>
+					</div>
+				</section> -->
+				<section>
+					<img alt="summary of long-polling vs websockets vs sse. Long-polling is just an inefficient workaround. Consider websockets or SSE depending on your requirements"
+					     src="img/polling-vs-websockets-vs-sse.png" />
+				</section>
+				<section>
+					<section>
+						<h2>What if...?</h2>
+						<h2>... I have just a REST API?</h2>
+						<img alt="Streamdata.io is a SAAS platform that transforms JSON API into streaming API based on Server-Sent Events"
+						     src="img/cloud-architecture-1024x519.png" width="60%"
+								 class="fragment" />
+					</section>
+					<section>
+						<img alt="Streamdata.io is a SAAS platform that transforms JSON API into streaming API based on Server-Sent Events"
+						     src="img/push.png" width="60%" />
+					</section>
+				</section>
+				<section data-background="img/vegetables.jpg">
+					<h1>Which ingredients for a real-time UX?</h1>
+				</section>
+				<section>
+					<h1>Libraries / Frameworks UI friendly</h1>
+					<ul>
+						<li>property bindings (Android, ObjectiveC, Swift, etc.)</li>
+						<li>Ionic / AngularJS</li>
+						<li>EmberJS</li>
+						<li>RiotJS</li>
+						<li>D3.js</li>
+						<li>Epoch.js</li>
+						<li>...</li>
+					</ul>
+				</section>
+				<section>
+					<h1>Demos</h1>
+				</section>
+				<section>
+					<h1>Conclusion</h1>
+					<ul>
+						<li>0.5s is the latency objective</li>
+						<li>The world is more and more dynamic and we've got the tools</li>
+						<li>Be ready to animate data, become streamers!</li>
+					</ul>
+					<p>
+						<blockquote>
+							&ldquo;The more others invest in amazing UI, the more yours seems louzy&rdquo;
+						</blockquote>
+						<span style="font-size: small;">Einstein « Relativity concepts applied to UI », OpenRoadMedia, 1937</span>
+					</p>
+				</section>
+				<section>
+					<h1>Thank you!</h1>
+				</section>
+				<section>
+					<h1>References</h1>
+					<p>JS Polyfills:
+						<ul>
+							<li><a target="_blank" href="https://github.com/streamdataio/EventSource">Streamdata.io fork from AMVTek</a></li>
+							<li><a target="_blank" href="https://github.com/amvtek/EventSource">AMVTek</a></li>
+							<li><a target="_blank" href="https://github.com/Yaffle/EventSource/">Yaffle</a></li>
+							<li><a target="_blank" href="https://github.com/remy/polyfills/blob/master/EventSource.js">Remi</a></li>
+						</ul>
+					</p>
+				</section>
+				<section>
+					<h1>References</h1>
+					<p>
+						WebSockets / SSE:
+						<ul>
+							<li><a target="_blank" href="http://streamdata.io/blog/server-sent-events/">What is Server-Sent Events?</a></li>
+							<li><a target="_blank" href="http://streamdata.io/blog/push-sse-vs-websockets/">WebSockets vs SSE</a></li>
+							<li><a target="_blank" href="https://www.google.fr/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0CCAQtwIwAGoVChMI95Hmhoe6yAIVwdMaCh3NdQ8J&url=http%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DvhJz3HftuZU&usg=AFQjCNHl-lUmlneOvf1dPNwBimq3_wSyIA&bvm=bv.104819420,d.d2s">Getting started with WebSockets and SSE</a></li>
+							<li><a target="_blank" href="https://segment.com/blog/2014-04-03-server-sent-events-the-simplest-realtime-browser-spec/">Server-Sent Events: The simplest realtime browser spec</a></li>
+						</ul>
+					</p>
+				</section>
+			</div>
+		</div>
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+		<script src="js/jquery.min.js"></script>
+
+		<script>
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+				width: '100%',
+				height: '100%',
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+			var html_barra = '<div class="bottom-logo"><img alt="logo" src="img/logo-streamdataio-48.png"></div>';
+			Reveal.addEventListener( 'slidechanged', function( event ) {
+				// if ( window.location.search.match( /print-pdf/gi ) ) {
+				// 		// $('section').append(html_barra);
+				// }
+				// else {
+					var hasNotLogo = !$('div.reveal.bottom-logo') || $('div.reveal.bottom-logo').length == 0;
+					if (hasNotLogo && !Reveal.isFirstSlide()) {
+						$('div.reveal').append(html_barra);
+					}
+				// }
+			} );
+
+		</script>
+
+	</body>
+</html>
